@@ -46,7 +46,7 @@ with open(file_to_load) as election_data:
         #print the candidate names for each row
         candidate_name = row[2]
         
-      
+    
         #Check if the candidate name is int he Candidate options list
         if candidate_name not in candidate_options:
 
@@ -59,55 +59,74 @@ with open(file_to_load) as election_data:
         #Add a vote to that candiate's count
         candidate_votes[candidate_name] += 1
 
-    #print the candidate vote dictionary
-    print(candidate_votes)
 
-#iterate throught candidate_options list to get names
-for candidate_name in candidate_votes:
+#Save the results to text file    
+with open (file_to_save, "w") as txt_file:
 
-    #use variable to retrieve the votes of the candidate from candidate_votes {}
-    votes = candidate_votes[candidate_name]
-    #calaculate percentage of the vote
-    vote_percentage = float(votes) / float(total_votes) * 100
+    election_results = (
 
-    print(f'{candidate_name}: {vote_percentage:.1f}% ({votes})\n')
+        f"\nElection Results\n"
+        f"-------------------------\n"
+        f"Total Votes: {total_votes:,}\n"
+        f"-------------------------\n")
 
-    #Determine if the votes are greater than the winning count
-    if (votes > winning_count) and (vote_percentage > winning_percentage):
-        #if true then set the winning_count = votes and winning_percentage = vote_percentage
-        winning_count = votes
-        winning_percentage = vote_percentage
-        #set the winning_candidate equalt to candidate_name
-        winning_candidate = candidate_name
+    print(election_results, end="")
 
-    #to do: print the winning candidate, vote count and percentage to terminal
+    # Save the final vote count to the text file.
+    txt_file.write(election_results)
 
-winning_candidate_summary = (
-    f"-------------------------\n"
-    f"Winner: {winning_candidate}\n"
-    f"Winning Vote Count: {winning_count:,}\n"
-    f"Winning Percentage: {winning_percentage:.1f}%\n"
-    f"-------------------------\n")
-print(winning_candidate_summary)
+    #iterate throught candidate_options list to get names
+    for candidate_name in candidate_votes:
 
-#Print the total votes
-print(f'There are {total_votes} total votes')
+        #use variable to retrieve the votes of the candidate from candidate_votes {}
+        votes = candidate_votes[candidate_name]
+        #calaculate percentage of the vote
+        vote_percentage = float(votes) / float(total_votes) * 100
+
+        candidate_results = (f'{candidate_name}: {vote_percentage:.1f}% ({votes})\n')
+        # Print each candidate, their voter count, and percentage to the terminal.
+        print(candidate_results)
+        #  Save the candidate results to our text file.
+        txt_file.write(candidate_results)
+
+        #Determine if the votes are greater than the winning count
+        if (votes > winning_count) and (vote_percentage > winning_percentage):
+            #if true then set the winning_count = votes and winning_percentage = vote_percentage
+            winning_count = votes
+            winning_percentage = vote_percentage
+            #set the winning_candidate equalt to candidate_name
+            winning_candidate = candidate_name
+
+    #print the winning candidate, vote count and percentage to terminal
+    winning_candidate_summary = (
+        f"-------------------------\n"
+        f"Winner: {winning_candidate}\n"
+        f"Winning Vote Count: {winning_count:,}\n"
+        f"Winning Percentage: {winning_percentage:.1f}%\n"
+        f"-------------------------\n")
+    #print winning candidate summary to terminal
+    print(winning_candidate_summary)
+    # Save the winning candidate's name to the text file.
+    txt_file.write(winning_candidate_summary)
+
+    #Print the total votes
+    print(f'There are {total_votes} total votes')
 
 
 
 
 
 
-    #To-do: run the analysis
+        #To-do: run the analysis
 
-    # the data we need to retrieve. 
+        # the data we need to retrieve. 
 
-    # 1.Total number of votes cast
+        # 1.Total number of votes cast
 
-    # 2.complete list of candisates who received votes
+        # 2.complete list of candisates who received votes
 
-    # 3.total number of votes each candidate received
+        # 3.total number of votes each candidate received
 
-    # 4.Percentage of votes each candidate won
+        # 4.Percentage of votes each candidate won
 
-    # 5. the winner of the election based on popular vote
+        # 5. the winner of the election based on popular vote
